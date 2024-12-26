@@ -111,13 +111,13 @@ namespace nonlinearEquations
                 return DichotomyMethod(a, b, func, eps);
             }
         }
-        public double Nuton(double x, double h, f func)
+        public double Nuton(double x1, double x0, double h, f func)
         {
-            return x - func(x)/dfdx(x, h, func);
-        }
-        public double dfdx(double x, double h, f func)
-        {
-            return (func(x+h) - func(x))/h;
+            if(x1 == x0)
+            {
+                return x1;
+            }
+            return x1 - func(x1)*(x1-x0)/(func(x1)-func(x0));
         }
         public delegate double f(double x);
         public double f1(double x)
@@ -175,7 +175,7 @@ namespace nonlinearEquations
             f func;
             double h = 0.0001;
             double x0;
-            double xNext = (a+b)/2;
+            double xNext = b;
             if (radioButton1.Checked)
             {
                 func = f1;
@@ -196,9 +196,9 @@ namespace nonlinearEquations
             do
             {
                 x0 = xNext;
-                xNext = Nuton(x0, h, func);
+                xNext = Nuton(xNext, a, h, func);
             } while (Math.Abs(xNext - x0) >= eps);
-            textBox2.Text = Convert.ToString(x0);
+            textBox2.Text = Convert.ToString(xNext);
         }
         private void radioButton1_MouseDown(object sender, MouseEventArgs e)
         {
