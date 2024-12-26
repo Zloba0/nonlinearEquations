@@ -111,7 +111,7 @@ namespace nonlinearEquations
                 return DichotomyMethod(a, b, func, eps);
             }
         }
-        public double Nuton(double x1, double x0, double h, f func)
+        public double ChordMethod(double x1, double x0, double h, f func)
         {
             if(x1 == x0)
             {
@@ -196,7 +196,7 @@ namespace nonlinearEquations
             do
             {
                 x0 = xNext;
-                xNext = Nuton(xNext, a, h, func);
+                xNext = ChordMethod(xNext, a, h, func);
             } while (Math.Abs(xNext - x0) >= eps);
             textBox2.Text = Convert.ToString(xNext);
         }
